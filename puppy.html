@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+            nav{
+background-color: teal;
+width: 100%;
+}
+.nav_container{
+    width: 25%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+.nav_container a{
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: 600;
+}
+    #mainDiv{
+        width: 90%;
+        /* border: 1px solid black; */
+        margin: auto;
+
+    }
+    #PuppyData{
+       display: grid;
+       grid-template-columns: repeat(4,1fr);
+        margin-top: 20px;
+    }
+           
+    
+    .image{
+        width: 250px;
+        height: 250px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+         }
+</style>
+<body>
+
+    <nav>
+        <div class="nav_container">
+        <a href="./puppy.html">Puppy</a>
+        <a href="./search.html">Search Breed</a>  
+    </div>
+    </nav>
+    <div id="mainDiv">
+    <div id="PuppyData">
+
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    let puppyImg=document.getElementById("PuppyData")
+    let name=JSON.parse(localStorage.getItem("name"))
+
+    fetchData()
+    async  function fetchData(){
+        try{
+            let res=await fetch(`https://dog.ceo/api/breed/${name}/images`)
+            res=await res.json()
+            res.message.map((item)=>{
+                displayData(item)
+            })
+        }
+        catch (error) {
+      console.log(error);
+    }
+    }
+
+    function displayData(data){
+        let div = document.createElement("div");    
+       div.className = "imgDiv"
+       
+       let img=document.createElement("img");
+       img.src = data;
+       img.className = "image"
+       div.append(img);
+       puppyImg.append(div)
+    }
+</script>

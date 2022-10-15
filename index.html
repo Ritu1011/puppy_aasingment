@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        nav{
+background-color: teal;
+width: 100%;
+}
+.nav_container{
+    width: 25%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+.nav_container a{
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: 600;
+}
+.main_container{
+margin: auto;
+   }
+#dataContainer{
+   width: 25%; 
+   height: 400px;
+   
+   overflow: scroll;
+   margin: 50px auto;
+}
+
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav_container">
+        <a href="./puppy.html">Puppy</a>
+        <a href="./search.html">Search Breed</a>  
+    </div>
+    </nav>
+    <div class="main_container">
+    <div id="dataContainer">
+       
+    </div>
+</div>
+</body>
+</html>
+<script>
+    let dataContainer=document.getElementById("dataContainer");
+
+    fetchData()
+    async  function fetchData(){
+        try{
+            let res=await fetch("https://dog.ceo/api/breeds/list/all")
+            res=await res.json()
+            for (key in res.message) {
+            displayData(key)
+          }
+        }
+        catch (error) {
+      console.log(error);
+    }
+    }
+
+
+    function displayData(data){
+        let h3 = document.createElement("h3");    
+        h3.innerText=data
+        h3.className = "h3"
+        h3.addEventListener("click",()=>{
+            window.location.href="./puppy.html"
+        localStorage.setItem("name", JSON.stringify(data))
+        })
+        dataContainer.append(h3)
+    }
+
+    
+</script>
